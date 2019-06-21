@@ -2,8 +2,8 @@ BACKLIGHT_ENABLE = yes
 MOUSEKEY_ENABLE = no        # Mouse keys(+4700)
 COMBO_ENABLE = yes
 
-VELOCIKEY_ENABLE = yes
-
 RGBLIGHT_ENABLE = yes
 
 BOOTMAGIC = lite
+
+EXTRAFLAGS += -flto
