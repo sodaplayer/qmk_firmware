@@ -16,12 +16,17 @@
 #define DOT_FUN LT(FUN_LAYER, KC_DOT)
 
 
-#define WIN_W LGUI_T(LT(WIN_LAYER, KC_W))
-
 #define SFT_A MT(MOD_LSFT,  KC_A)
 #define SFT_TAB MT(MOD_LSFT, KC_TAB)
 
+#define SFT_SPC MT(MOD_LSFT, KC_SPC)
+
+#define SFT_N MT(MOD_LSFT, KC_N)
+#define SFT_B MT(MOD_LSFT, KC_B)
+
 #define RALT_M MT(MOD_RALT, KC_M)
+
+#define RALT_SPC MT(MOD_RALT, KC_SPC)
 
 
 #define CTL_Z MT(MOD_LCTL,  KC_Z)
@@ -33,12 +38,14 @@
 
 #define CTL_DOWN (keyboard_report->mods & (MOD_BIT(KC_LCTL) | MOD_BIT(KC_RCTL)))
 #define SFT_DOWN (keyboard_report->mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)))
+#define ALT_DOWN (keyboard_report->mods & (MOD_BIT(KC_LALT) | MOD_BIT(KC_RALT)))
 #define WIN_DOWN (keyboard_report->mods & (MOD_BIT(KC_LGUI) | MOD_BIT(KC_RGUI)))
 
 #define RGB_DEFAULT_MODE RGBLIGHT_MODE_BREATHING + 3
-#define RGB_SHIFT_MODE RGBLIGHT_MODE_KNIGHT
+#define RGB_SHIFT_MODE RGBLIGHT_MODE_SNAKE + 1
 #define RGB_CTRL_MODE RGBLIGHT_MODE_SNAKE
-#define RGB_SHIFT_CTRL_MODE RGBLIGHT_MODE_ALTERNATING
+#define RGB_ALT_MODE RGBLIGHT_MODE_ALTERNATING
+#define RGB_SHIFT_CTRL_MODE RGBLIGHT_MODE_KNIGHT + 2
 
 #define HSV_DEFAULT 25, 255, 255
 
@@ -47,22 +54,31 @@ extern rgblight_config_t rgblight_config;
 enum layers {
     DEFAULT_LAYER = 0,
     COM_LAYER,
-    WIN_LAYER,
     NUM_LAYER,
     MISC_LAYER,
     ARR_LAYER,
     FUN_LAYER,
 };
 
+enum combos {
+    JK_ESC,
+    BN_SPC,
+};
+
 const uint16_t PROGMEM esc_combo[] = { KC_J, KC_K, COMBO_END };
-combo_t key_combos[COMBO_COUNT] = { COMBO(esc_combo, KC_ESC) };
+const uint16_t PROGMEM spc_combo[] = { KC_B, KC_N, COMBO_END };
+
+combo_t key_combos[COMBO_COUNT] = { 
+    [JK_ESC] = COMBO(esc_combo, KC_ESC), 
+    [BN_SPC] = COMBO(spc_combo, KC_SPC),
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [DEFAULT_LAYER] = LAYOUT_ortho_3x10(
           COM_Q ,  KC_W ,   KC_E ,  KC_R ,  KC_T ,     KC_Y ,  KC_U ,  KC_I ,  KC_O ,    KC_P ,
           SFT_A ,   S_ARR ,   KC_D ,  KC_F ,  KC_G ,     KC_H ,  KC_J ,  KC_K ,  KC_L ,    KC_SFTENT ,
-          CTL_Z ,  WIN_X ,  KC_C ,  KC_V ,   B_NUM , SPC_SYM ,   KC_N,  RALT_M ,  DOT_FUN ,  CTL_BS
+          CTL_Z ,  WIN_X ,  KC_C ,  KC_V ,   B_NUM ,  N_SYM,  KC_M , RALT_SPC ,  DOT_FUN ,  CTL_BS
   ),
 
   [COM_LAYER] = LAYOUT_ortho_3x10(
@@ -71,16 +87,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_CAD,  _______,  _______,  _______,  _______,  _______,  RESET,    KC_VOLD,  KC_MUTE,  BL_DEC
   ),
 
-  [WIN_LAYER] = LAYOUT_ortho_3x10(
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,
-    _______,  _______,  _______,  _______,  _______,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RIGHT,  _______,
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______
-  ),
-
   [NUM_LAYER] = LAYOUT_ortho_3x10(
        KC_1,  KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,      KC_9,      KC_0,
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   KC_QUOTE,  KC_SCOLON,
-    _______,  _______,  _______,  _______,  _______,  KC_LSFT,  _______,  KC_COMMA,  KC_DOT,    KC_SLASH
+    KC_TAB,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   KC_QUOTE,  KC_SCOLON,
+    _______,  _______,  _______,  _______,  _______,  SFT_SPC,  _______,  KC_COMMA,  KC_DOT,    _______
   ),
 
   // [SYM_LAYER] = LAYOUT_ortho_3x10(
@@ -91,19 +101,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [MISC_LAYER] = LAYOUT_ortho_3x10(
     KC_GRAVE,  _______,  _______,  _______,  _______,  _______,  KC_LBRC,  KC_RBRC,   KC_MINUS,  KC_EQUAL,
-    SFT_TAB,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,   KC_COLON,
-    _______,  _______,  _______,  _______,  KC_LSFT,  _______,  _______,  _______,   _______,  KC_BSLASH
+    SFT_TAB,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,   KC_BSLASH,
+    _______,  _______,  _______,  _______,  SFT_SPC,  _______,  _______,  _______,   _______,  KC_SLASH
   ),
 
   [ARR_LAYER] = LAYOUT_ortho_3x10(
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,
-    _______,  _______,  _______,  _______,  _______,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RIGHT,  _______,
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______
+    _______,  _______,  _______,  _______,  _______,  KC_MS_L,  KC_MS_D,  KC_MS_U,  KC_MS_R,   KC_BTN1,
+    _______,  _______,  _______,  _______,  _______,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RIGHT,  KC_BTN2,
+    _______,  _______,  _______,  _______,  _______,  KC_WH_L,  KC_WH_D,  KC_WH_U,  KC_WH_R,   _______
   ),
 
   [FUN_LAYER] = LAYOUT_ortho_3x10(
-    _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6,  _______,  _______,  _______,
-    _______,  KC_F7, KC_F8, KC_F9, KC_F10,  KC_F11,  KC_F12, _______,  _______,  _______,
+    KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6,  KC_INS,  KC_HOME,  KC_PGUP,     _______, 
+     KC_F7, KC_F8, KC_F9, KC_F10,  KC_F11,  KC_F12, KC_DEL,  KC_END,  KC_PGDN, _______, 
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______
   ),
 };
@@ -124,7 +134,7 @@ void do_layer_color(void) {
             rgblight_sethsv_noeeprom(HSV_RED);
             break;
         case MISC_LAYER:
-            rgblight_sethsv_noeeprom(HSV_CYAN);
+            rgblight_sethsv_noeeprom(HSV_AZURE);
             break;
         case COM_LAYER:
             rgblight_sethsv_noeeprom(HSV_MAGENTA);
@@ -166,6 +176,11 @@ void matrix_scan_user(void) {
                 rgblight_mode_noeeprom(RGB_SHIFT_MODE);
             }
         } 
+        else if (ALT_DOWN) {
+            if (rgblight_config.mode != RGB_ALT_MODE) {
+                rgblight_mode_noeeprom(RGB_ALT_MODE);
+            }
+        }
         else {
             if (rgblight_config.mode != RGB_DEFAULT_MODE) {
                 rgblight_mode_noeeprom(RGB_DEFAULT_MODE);
@@ -174,7 +189,7 @@ void matrix_scan_user(void) {
     }
 
     if (WIN_DOWN) {
-        rgblight_sethsv_noeeprom(HSV_GREEN);
+        rgblight_sethsv_noeeprom(HSV_GOLD);
     } else {
         do_layer_color();
     }

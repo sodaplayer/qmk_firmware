@@ -1,5 +1,5 @@
 BACKLIGHT_ENABLE = yes
-MOUSEKEY_ENABLE = no        # Mouse keys(+4700)
+MOUSEKEY_ENABLE = yes        # Mouse keys(+4700)
 COMBO_ENABLE = yes
 
 RGBLIGHT_ENABLE = yes
