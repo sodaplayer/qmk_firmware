@@ -23,5 +23,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // #define USE_I2C
 
+#undef RGBLED_NUM
+#define RGBLED_NUM 16
+
+#define RGBLIGHT_LED_MAP { 3, 2, 1, 0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4 }
+
 #define RGBLIGHT_EFFECT_BREATHING
 #define RGBLIGHT_EFFECT_BREATHE_CENTER 1
