@@ -21,9 +21,9 @@ void keyboard_post_init_user(void) {
     rgblight_enable_noeeprom();
     rgblight_set_effect_range(0, 16);
     rgblight_sethsv_noeeprom(125, 255, 255);
-    // rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING + 3);
-    rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_SWIRL + 4);
-    rgblight_mode_noeeprom(RGBLIGHT_MODE_CHRISTMAS);
+    rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING + 3);
+    // rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_SWIRL + 4);
+    // rgblight_mode_noeeprom(RGBLIGHT_MODE_CHRISTMAS);
 }
 
 // enum custom_keycodes {
@@ -48,11 +48,17 @@ enum layers {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_DEF] = LAYOUT_65_with_macro(
-    KC_NO,  TO_FN1,   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,  KC_DEL, KC_HOME, \
-    KC_F1,   KC_F2,   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,         KC_END,  \
-    KC_F3,   KC_F4,   KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,                   KC_PGUP, \
-    KC_F5,   KC_F6,   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,                   KC_INS, KC_PGDN, \
-    KC_F7,   KC_F8,  KC_LCTL, KC_LGUI, KC_LALT, MO(_ARR),KC_SPC,           KC_SPC,  NUMTOG, KC_RALT, KC_RGUI, KC_MENU, KC_RCTL,                   KC_PSCR, PS_COM
+// ┌────────┬────────┐ ┌────────┬────────┬────────┬────────┬────────┬────────┬────────┐        ┌────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┐
+    KC_NO,   TO_FN1,    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,             KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,  KC_DEL, KC_HOME, \
+// ┌────────┬────────┐ ├────────┴────┬───┴────┬───┴────┬───┴────┬───┴────┬───┴────┬───┘    ┌───┴────┬───┴────┬───┴────┬───┴────┬───┴────┬───┴────┬───┴────┬───┴────────┼────────┤
+    KC_F1,   KC_F2,     KC_TAB,       KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,         KC_END,  \
+// ┌────────┬────────┐ ├─────────────┴─┬──────┴─┬──────┴─┬──────┴─┬──────┴─┬──────┴─┐      └─┬──────┴─┬──────┴─┬──────┴─┬──────┴─┬──────┴─┬──────┴─┬──────┴────────────┼────────┤
+    KC_F3,   KC_F4,     KC_ESC,         KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT, KC_PGUP, \
+// ┌────────┬────────┐ ├───────────────┴─────┬──┴─────┬──┴─────┬──┴─────┬──┴─────┬──┴─────┐  └─────┬──┴─────┬──┴─────┬──┴─────┬──┴─────┬──┴─────┬──┴───────────────────┼────────┤
+    KC_F5,   KC_F6,     KC_LSFT,              KC_Z,       KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, KC_INS, KC_PGDN, \
+// ┌────────┬────────┐ ├──────────┬──────────┴┬───────┴──┬─────┴─────┬──┴────────┴────────┤        ├────────┴────────┴────┬───┴────┬───┴────┬───┴────┬────────┬────────┼────────┤
+    KC_F7,   KC_F8,     KC_LCTL, KC_LGUI, KC_LALT, MO(_ARR),KC_SPC,          KC_SPC,  NUMTOG,    KC_RALT, KC_RGUI, KC_MENU, KC_RCTL, KC_PSCR, PS_COM
+// └────────┴────────┘ └──────────┴───────────┴──────────┴───────────┴────────────────────┘        └──────────────────────┴────────┴────────┴────────┴────────┴────────┴────────┘
   ),
 
   [_FN1] = LAYOUT_65_with_macro(
@@ -80,11 +86,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_ARR] = LAYOUT_65_with_macro(
-    KC_KP_1, KC_KP_2, _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,  KC_BSPC, _______, \
-    KC_KP_3, KC_KP_4, _______, KC_BTN2, KC_MS_U, KC_BTN1, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    KC_KP_5, KC_KP_6, KC_CAPS, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______, _______, _______, \
-    KC_KP_7, KC_KP_8, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    KC_KP_9, KC_KP_0, _______, _______, _______, _______, _______,          KC_BSPC, _______, _______, _______, _______, _______, _______, _______
+     TO_DEF, TO(_PS), _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,  KC_BSPC, _______, \
+    _______, _______, _______, KC_BTN2, KC_MS_U, KC_BTN1, _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2, _______, _______, _______, _______, \
+    _______, _______, KC_CAPS, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______,          KC_BSPC, _______, _______, _______, _______, _______, _______, _______
   ),
 
   [_NUM] = LAYOUT_65_with_macro(
@@ -109,11 +115,16 @@ uint8_t soda_current_layer = _DEF;
 void do_layer_color(void) {
     switch (soda_current_layer) {
         case(_FN1):
+
+            rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_SWIRL + 4);
             rgblight_set_effect_range(0, 12);
+
             rgblight_sethsv_range(10, 255, 255, 12, 16);
             break;
         case(_FN2):
+            rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_SWIRL + 4);
             rgblight_set_effect_range(0, 12);
+
             rgblight_sethsv_range(20, 255, 255, 12, 16);
             break;
         case(_NUM):
@@ -126,7 +137,11 @@ void do_layer_color(void) {
             break;
         case(_PS):
             rgblight_set_effect_range(0, 12);
-            rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_SWIRL + 4);
+            // rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_SWIRL + 4);
+
+            rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING + 3);
+            rgblight_sethsv_noeeprom(HSV_RED);
+
             rgblight_sethsv_range(125, 255, 255, 12, 16);
             break;
         case(_COM):
@@ -137,6 +152,10 @@ void do_layer_color(void) {
         default:
             rgblight_set_effect_range(0, 16);
             rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_SWIRL + 4);
+
+            rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING + 3);
+            rgblight_sethsv_noeeprom(HSV_RED);
+
             break;
     }
 }
