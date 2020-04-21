@@ -68,8 +68,8 @@ enum combos {
 const uint16_t PROGMEM esc_combo[] = { KC_J, KC_K, COMBO_END };
 const uint16_t PROGMEM spc_combo[] = { KC_B, KC_N, COMBO_END };
 
-combo_t key_combos[COMBO_COUNT] = { 
-    [JK_ESC] = COMBO(esc_combo, KC_ESC), 
+combo_t key_combos[COMBO_COUNT] = {
+    [JK_ESC] = COMBO(esc_combo, KC_ESC),
     [BN_SPC] = COMBO(spc_combo, KC_SPC),
 };
 
@@ -112,8 +112,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [FUN_LAYER] = LAYOUT_ortho_3x10(
-    KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6,  KC_INS,  KC_HOME,  KC_PGUP,     _______, 
-     KC_F7, KC_F8, KC_F9, KC_F10,  KC_F11,  KC_F12, KC_DEL,  KC_END,  KC_PGDN, _______, 
+    KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6,  KC_INS,  KC_HOME,  KC_PGUP,     _______,
+     KC_F7, KC_F8, KC_F9, KC_F10,  KC_F11,  KC_F12, KC_DEL,  KC_END,  KC_PGDN, _______,
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______
   ),
 };
@@ -165,7 +165,7 @@ void matrix_scan_user(void) {
         if (rgblight_config.mode != RGB_SHIFT_CTRL_MODE) {
             rgblight_mode_noeeprom(RGB_SHIFT_CTRL_MODE);
         }
-    } else { 
+    } else {
         if (CTL_DOWN) {
             if (rgblight_config.mode != RGB_CTRL_MODE) {
                 rgblight_mode_noeeprom(RGB_CTRL_MODE);
@@ -175,7 +175,7 @@ void matrix_scan_user(void) {
             if (rgblight_config.mode != RGB_SHIFT_MODE) {
                 rgblight_mode_noeeprom(RGB_SHIFT_MODE);
             }
-        } 
+        }
         else if (ALT_DOWN) {
             if (rgblight_config.mode != RGB_ALT_MODE) {
                 rgblight_mode_noeeprom(RGB_ALT_MODE);
