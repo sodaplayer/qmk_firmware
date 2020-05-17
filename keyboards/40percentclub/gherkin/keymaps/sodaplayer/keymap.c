@@ -58,6 +58,7 @@ enum layers {
     MISC_LAYER,
     ARR_LAYER,
     FUN_LAYER,
+    PS_LAYER,
 };
 
 enum combos {
@@ -82,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [COM_LAYER] = LAYOUT_ortho_3x10(
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_MPRV,  KC_MPLY,  KC_MNXT,
+    _______,  DF(DEFAULT_LAYER), DF(PS_LAYER),  _______,  _______,  _______,  _______,  KC_MPRV,  KC_MPLY,  KC_MNXT,
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_VOLU,  KC_MSTP,  BL_INC,
     KC_CAD,  _______,  _______,  _______,  _______,  _______,  RESET,    KC_VOLD,  KC_MUTE,  BL_DEC
   ),
@@ -116,7 +117,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_F7, KC_F8, KC_F9, KC_F10,  KC_F11,  KC_F12, KC_DEL,  KC_END,  KC_PGDN, _______,
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______
   ),
+
+  [PS_LAYER] = LAYOUT_ortho_3x10(
+    COM_Q, _______, _______, _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+  ),
 };
+
+uint8_t def_layer = DEFAULT_LAYER;
 
 uint8_t soda_current_layer = DEFAULT_LAYER;
 
@@ -126,6 +135,25 @@ uint32_t layer_state_set_user(uint32_t state) {
     do_layer_color();
 
     return state;
+}
+
+uint32_t default_layer_state_set_user(uint32_t state) {
+
+    def_layer = biton32(state);
+    do_layer_color();
+
+    return state;
+}
+
+void do_default_layer_color(void) {
+    switch (def_layer) {
+        case DEFAULT_LAYER:
+            rgblight_sethsv_noeeprom(HSV_DEFAULT);
+            break;
+        case PS_LAYER:
+            rgblight_sethsv_noeeprom(HSV_CYAN);
+            break;
+    }
 }
 
 void do_layer_color(void) {
@@ -143,7 +171,7 @@ void do_layer_color(void) {
             rgblight_sethsv_noeeprom(HSV_PURPLE);
             break;
         default:
-            rgblight_sethsv_noeeprom(HSV_DEFAULT);
+            do_default_layer_color();
             break;
     }
 }
